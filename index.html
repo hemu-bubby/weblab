@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .navbar-right {
+            float: right;
+        }
+
+        .background {
+            background-image: url('https://kssem.edu.in/img/new_slider/slide6.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        form h2 {
+            margin-bottom: 15px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .toggle-link {
+            margin-top: 15px;
+            color: #3498db;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <!-- Show login/register only if not logged in -->
+        <?php session_start(); ?>
+        <?php if (!isset($_SESSION['username'])): ?>
+            <a href="index.html">Login</a>
+        <?php else: ?>
+            <a href="logout.php" class="navbar-right">Logout</a>
+        <?php endif; ?>
+    </div>
+
+    <div class="background">
+        <div class="container">
+            <h1>Welcome</h1>
+            <div class="form-container">
+                <!-- Login Form -->
+                <form id="login-form" action="login.php" method="POST">
+                    <h2>Login</h2>
+                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                </form>
+                
+
+                <!-- Registration Form (Initially Hidden) -->
+                <form id="register-form" action="register.php" method="POST" style="display: none;">
+                    <h2>Register</h2>
+                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="text" name="fullname" placeholder="Full Name" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="tel" name="phone" placeholder="Phone Number" required>
+                    <input type="date" name="dob" placeholder="Date of Birth" required>
+                    <input type="text" name="nationality" placeholder="Nationality" required>
+                    <select name="marital_status" required>
+                        <option value="">Marital Status</option>
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Divorced">Divorced</option>
+                    </select>
+                    <input type="text" name="degree" placeholder="Degree" required>
+                    <input type="text" name="institution" placeholder="Institution" required>
+                    <textarea name="soft_skills" placeholder="Soft Skills" required></textarea>
+                    <input type="text" name="languages_known" placeholder="Languages Known" required>
+                    <textarea name="hobbies" placeholder="Hobbies" required></textarea>
+                    <button type="submit">Register</button>
+                </form>
+
+                <!-- Toggle link between login and register -->
+                <p id="toggle-link" class="toggle-link" onclick="toggleForm()">Don't have an account? Register here.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleForm() {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const toggleLink = document.getElementById('toggle-link');
+
+            if (loginForm.style.display === "none") {
+                loginForm.style.display = "block";
+                registerForm.style.display = "none";
+                toggleLink.innerHTML = "Don't have an account? Register here.";
+            } else {
+                loginForm.style.display = "none";
+                registerForm.style.display = "block";
+                toggleLink.innerHTML = "Already have an account? Login here.";
+            }
+        }
+    </script>
+</body>
+</html>
